@@ -1,22 +1,12 @@
-#include "square.h"
+#ifndef SQUARE_H
+#define SQUARE_H
 
-square empty_square()
-{
-  return NULL;
-}
+#include "defs.h"
 
-square new_square(square S, int x, int y)
-{
-  square new_s = empty_square();
-  new_s = (square)malloc(sizeof(struct square_ptr));
-  new_s->x = x;
-  new_s->y = y;
-  new_s->next = S
-  return new_s;
-}
+typedef struct square_ptr{
+  int x;
+  int y;
+  struct part * next;
+}*square;
 
-void coord_square(square S, int x, int y)
-{
-  S->x = x;
-  S->y = y;
-}
+#endif /* SQUARE_H */
