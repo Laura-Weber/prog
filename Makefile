@@ -33,7 +33,7 @@ LIBS = -lSDL_ttf -lm
 
 # define the C source files
 # TODO: update and complete the following line with your .c files names
-SRCS = main.c
+SRCS = main.c list_piece.c square.c
 
 # define the C object files 
 #
@@ -46,7 +46,7 @@ SRCS = main.c
 OBJS = $(SRCS:.c=.o)
 
 # define the executable file 
-MAIN = main
+MAIN = pentomino
 
 #
 # The following part of the makefile is generic; it can be used to 
