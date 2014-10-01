@@ -113,6 +113,6 @@ list_piece rotate_r(list_piece P)
     	p->square->y = P->square->x;
     	P->square->x = 0;
     }
-  P = P->next;
+  P->square = P->square->next;
   }
 }
