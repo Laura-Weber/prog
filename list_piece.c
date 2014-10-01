@@ -93,3 +93,26 @@ void creat_list_piece(list_piece P)
     }else{
       printf("erreur fichier vide\n");
 	}
+
+list_piece rotate_r(list_piece P)
+{
+  while(P->square != NULL){
+    if(P->square->y == 0){
+  	p->square->y = P->square->x;
+  	P->square->x = 3;
+    }
+    if(P->square->y == 1){
+  	p->square->y = P->square->x;
+  	P->square->x = 2;
+    }
+    if(P->square->y == 2){
+    	p->square->y = P->square->x;
+    	P->square->x = 1;
+    }
+    if(P->square->y == 3){
+    	p->square->y = P->square->x;
+    	P->square->x = 0;
+    }
+  P = P->next;
+  }
+}
