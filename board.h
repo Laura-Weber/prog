@@ -12,4 +12,8 @@ typedef struct Plateau{
   point hd;
 } plateau;
 
+typedef struct {             // Structure de couleur
+  octet R, V, B ;            // composée des 3 bases
+} couleur ;   
+
 #endif /*plateau.h*/
