@@ -6,7 +6,7 @@
 
 typedef struct piece_ptr{
   list_square square;
-  struct piece_ptr * prec
+  struct piece_ptr * prec;
   struct piece_ptr * next;
 } *list_piece;
 
