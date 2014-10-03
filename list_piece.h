@@ -17,8 +17,12 @@
 /*    Structure    */
 /*******************/
 
+typedef struct test{
+  int* test_test;
+}*test_ptr;
+
 typedef struct piece_ptr{
-  struct square_ptr * square;
+  struct test_ptr * square;
   struct piece_ptr * prec;
   struct piece_ptr * next;
 } *list_piece;
