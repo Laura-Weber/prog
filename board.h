@@ -19,7 +19,7 @@ typedef struct {             // Structure de couleur
 } couleur ;   
 
 void ColoriePixel (int x, int y, TCouleur C);
-void dessine_segment(point p1, point p2)
-void print_board()
+void dessine_segment(point p1, point p2);
+void print_board();
 
 #endif /*plateau.h*/
