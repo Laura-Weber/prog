@@ -27,7 +27,7 @@ list_piece empty_list (void)
 void add_piece_before(list_piece L, list_square S)
 {
   list_piece new_l ;
-  new_l = malloc(sizeof(*list_piece));
+  new_l = malloc(sizeof(*new_l));
   new_l->square = S;
   new_l->prec = L->prec;
   new_l->suiv = L;
