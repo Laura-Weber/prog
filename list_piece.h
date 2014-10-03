@@ -2,6 +2,7 @@
 #define LIST_PIECE_H
 
 #include "defs.h"
+#include "square.h"
 
 typedef struct piece_ptr{
   list_square square;
