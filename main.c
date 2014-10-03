@@ -4,6 +4,7 @@ int main(int argc, char *argv[])
 {
     SDL_Surface * ecran = NULL, *rectangle = NULL;
     int continuer = 1;
+    SDL_Rect position;
     SDL_Event event;
 
     SDL_Init(SDL_INIT_VIDEO); 
@@ -30,9 +31,6 @@ int main(int argc, char *argv[])
 	      case SDLK_q:
 	        continuer = 0;
 	        break;
-	    case SDL_KEYUP:
-	      keys[event.key.keysym.sym] = 0;  
-	      break;
 	  }
         }
     }
