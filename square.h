@@ -7,7 +7,7 @@ typedef struct square_ptr{
   int x;
   int y;
   struct square_ptr * next;
-}*list_square;
+}*list_square ;
 
 list_square empty_square();
 list_square new_square(list_square S, int x, int y);
