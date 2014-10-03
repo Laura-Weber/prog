@@ -4,7 +4,7 @@
 #include "defs.h"
 
 typedef struct piece_ptr{
-  piece square;
+  square square;
   struct piece_ptr * next;
 } *list_piece;
 
