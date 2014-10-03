@@ -30,20 +30,20 @@ void add_piece_before(list_piece L, list_square S)
   new_l = malloc(sizeof(*new_l));
   new_l->square = S;
   new_l->prec = L->prec;
-  new_l->suiv = L;
-  L->prec->suiv = new_l;
+  new_l->next = L;
+  L->prec->next = new_l;
   L->prec = new_l;
 }
 
 void add_piece_after(list_piece L, list_square S)
 {
   list_piece new_l;
-  new_l = malloc(sizeof(*list_piece));
+  new_l = malloc(sizeof(*new_l));
   new_l->square = S;
   new_l->prec = L;
-  new_l->suiv = L->suiv;
-  L->suiv->prec = new_l;
-  L->suiv = new_l;
+  new_l->next = L->next;
+  L->next->prec = new_l;
+  L->next = new_l;
 }
 
 void add_head_piece(list_piece racine, square S)
@@ -105,15 +105,15 @@ list_piece creat_list_piece()
 
 void supp_piece(list_piece P)
 {
-  P->prec->suiv = P->suiv;
+  P->prec->next = P->suiv;
   P->suiv->prec = P->prec;
   free(P);
 }
 
 void supp_head_piece (list_piece racine)
 {
-  if(racine->suiv != racine){
-    supp_piece(racine->suiv);;
+  if(racine->next != racine){
+    supp_piece(racine->next);;
   }
 }
 
@@ -130,8 +130,8 @@ void supp_end_piece (list_piece racine)
 
 list_piece head_piece(list_piece racine)
 {
-  if(racine->suiv != racine){
-    return racine->suiv;
+  if(racine->next != racine){
+    return racine->next;
   }else{
     return NULL;
   }
@@ -153,8 +153,8 @@ list_piece end_piece(list_piece racine)
 void free_list_piece(list_piece P)
 {
   list_piece tmp, cur;
-  for(tmp = P->suiv; tmp != P; tmp = cur){
-    cur = tmp->suiv;
+  for(tmp = P->next; tmp != P; tmp = cur){
+    cur = tmp->next;
     free(tmp);
   }
   free(P);
