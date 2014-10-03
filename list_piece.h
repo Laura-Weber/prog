@@ -35,8 +35,8 @@ list_piece empty_list (void);
 
 void add_piece_before(list_piece L, list_square S);
 void add_piece_after(list_piece L, list_square S);
-void add_head_piece(list_piece racine, square S);
-void add_end_piece(list_piece racine, square S);
+void add_head_piece(list_piece racine, list_square S);
+void add_end_piece(list_piece racine, list_square S);
 
 /////////////////////////
 //     constructors    //
