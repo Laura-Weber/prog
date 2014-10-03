@@ -1,5 +1,22 @@
 #include "defs.h"
 
+void ColoriePixel (int x, int y, TCouleur C)
+{
+
+  if(!SDL_MUSTLOCK(fenetre) || SDL_LockSurface(fenetre) >= 0)
+   {
+    if(x>=0 && x<fenetre->w && y>=0 && y<fenetre->h)
+     {
+      Uint8 *pixmem32 = (Uint8*) fenetre->pixels  + y * fenetre->pitch + x * BytePP;
+      *(Uint32 *)pixmem32 = SDL_MapRGB(fenetre->format, C.R, C.V, C.B);
+     }
+   }
+   if(SDL_MUSTLOCK(fenetre)) 
+    {
+     SDL_UnlockSurface(fenetre);
+    }
+}
+
 void dessine_segment(point p1, point p2)
 {
   double dx = 0.0, dy = 0.0;
@@ -48,7 +65,7 @@ void dessine_segment(point p1, point p2)
     }  
 }
 
-void affichage fenêtre()
+void print_board()
 {
   couleur couleurContour = {255, 0, 0};
   point p1 = {10, 10};
