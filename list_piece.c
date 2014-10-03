@@ -46,12 +46,12 @@ void add_piece_after(list_piece L, list_square S)
   L->next = new_l;
 }
 
-void add_head_piece(list_piece racine, square S)
+void add_head_piece(list_piece racine, list_square S)
 {
   add_piece_after(racine, S);
 }
 
-void add_end_piece(list_piece racine, square S)
+void add_end_piece(list_piece racine, list_square S)
 {
   add_piece_before(racine, S);
 }
@@ -62,7 +62,7 @@ void add_end_piece(list_piece racine, square S)
 
 list_piece creat_list_piece()
 {
-  list_piece P = empty_list;
+  list_piece P = empty_list();
   list_square S = empty_square();
   FILE * fichier;
   int pos_x = 0;
@@ -76,7 +76,7 @@ list_piece creat_list_piece()
     while(caractereActuel != EOF){
       	if (caractereActuel == '#'){
 	  S = new_square(S, pos_x, pos_y);
-	  P = add_piece(P,S);
+	  P = add_piece_after(P,S);
 	  pos_x += 1;
 	  caractereActuel = fgets(fichier);
 	}else{
