@@ -2,6 +2,8 @@
 #define PLATEAU_H
 #include "defs.h"
 
+typedef unsigned char octet;
+
 typedef struct Point{
   int x;
   int y;
@@ -15,5 +17,9 @@ typedef struct Plateau{
 typedef struct {             // Structure de couleur
   octet R, V, B ;            // composée des 3 bases
 } couleur ;   
+
+void ColoriePixel (int x, int y, TCouleur C);
+void dessine_segment(point p1, point p2)
+void print_board()
 
 #endif /*plateau.h*/
