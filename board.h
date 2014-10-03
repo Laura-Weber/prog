@@ -18,7 +18,7 @@ typedef struct {             // Structure de couleur
   octet R, V, B ;            // composée des 3 bases
 } couleur ;   
 
-void ColoriePixel (int x, int y, TCouleur C);
+void ColoriePixel (int x, int y, couleur C);
 void dessine_segment(point p1, point p2);
 void print_board();
 
