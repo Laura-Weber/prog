@@ -76,7 +76,7 @@ list_piece creat_list_piece()
     while(caractereActuel != EOF){
       	if (caractereActuel == '#'){
 	  S = new_square(S, pos_x, pos_y);
-	  P = add_piece_after(P,S);
+	  add_piece_after(P,S);
 	  pos_x += 1;
 	  caractereActuel = fgetc(fichier);
 	}else{
@@ -97,6 +97,7 @@ list_piece creat_list_piece()
     }else{
       printf("erreur fichier vide\n");
 	}
+  return P;
 }
 
 /////////////////////////////
@@ -106,7 +107,7 @@ list_piece creat_list_piece()
 void supp_piece(list_piece P)
 {
   P->prec->next = P->next;
-  P->suiv->prec = P->prec;
+  P->next->prec = P->prec;
   free(P);
 }
 
