@@ -6,7 +6,7 @@
 typedef struct square_ptr{
   int x;
   int y;
-  struct part * next;
+  struct square_ptr * next;
 }*square;
 
 #endif /* SQUARE_H */
