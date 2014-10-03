@@ -70,4 +70,13 @@ void print_board()
   couleur couleurContour = {255, 0, 0};
   point p1 = {10, 10};
   point p2 = {100, 100};
+  point p3 = {10, 100};
+  point p4 = {100, 10};
+  
+  
+  dessine_segment(p1, p2, couleurContour);
+  dessine_segment(p2, p3, couleurContour);
+  dessine_segment(p3, p4, couleurContour);
+  dessine_segment(p4, p1, couleurContour);
+
 }
