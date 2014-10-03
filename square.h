@@ -9,4 +9,8 @@ typedef struct square_ptr{
   struct square_ptr * next;
 }*list_square;
 
+list_square empty_square();
+list_square new_square(list_square S, int x, int y);
+void coord_square(list_square S, int x, int y);
+
 #endif /* SQUARE_H */
