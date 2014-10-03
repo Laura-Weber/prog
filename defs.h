@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 #include "list_piece.h"
-#include "piece.h"
+#include "square.h"
 #include "plateau.h"
 
 #define SIZE_SQUARE 16
