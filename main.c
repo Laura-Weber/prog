@@ -4,15 +4,12 @@ int main(int argc, char *argv[])
 {
     SDL_Surface * ecran = NULL, *rectangle = NULL;
     int continuer = 1;
-    SDL_Rect position;
     SDL_Event event;
 
     SDL_Init(SDL_INIT_VIDEO); 
  
     ecran = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE);
     rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE, 8, 8, 32, 0, 0, 0, 0);
-    position.x = 0;
-    position.y = 0;
     SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
     SDL_Flip(ecran);
 
