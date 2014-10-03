@@ -78,17 +78,17 @@ list_piece creat_list_piece()
 	  S = new_square(S, pos_x, pos_y);
 	  P = add_piece_after(P,S);
 	  pos_x += 1;
-	  caractereActuel = fgets(fichier);
+	  caractereActuel = fgetc(fichier);
 	}else{
 	  if (caractereActuel == '\n'){
 	    pos_y += 1;
 	    pos_x = 0;
 	    caractereActuel = fgetc(fichier);
-	    if (caractereActuel = '\n\n'){
+	    if (caractereActuel = '\n'){
 	      P = P->next;
 	      pos_x = 0;
 	      pos_y = 0;
-	      caractereActuel = fgetsc(fichier);
+	      caractereActuel = fgetc(fichier);
 	    }
 	  }
 	}
@@ -105,7 +105,7 @@ list_piece creat_list_piece()
 
 void supp_piece(list_piece P)
 {
-  P->prec->next = P->suiv;
+  P->prec->next = P->next;
   P->suiv->prec = P->prec;
   free(P);
 }
@@ -177,14 +177,6 @@ void down_piece(list_piece P)
 {
   while (P->square != NULL){
     P->square->y += 1;
-    P->square = P->square->next;
-  }
-}
-
-void up_piece(list_piece P)
-{
-  while (P->square != NULL){
-    P->square->y -= 1;
     P->square = P->square->next;
   }
 }
