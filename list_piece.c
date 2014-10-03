@@ -8,7 +8,7 @@ list_piece empty_list (void)
 list_piece add_piece(list_piece L, list_square S)
 {
   list_piece new_l = empty_list();
-  new_l = (list_piece)malloc(sizeof(struct list_piece_ptr));
+  new_l = malloc(sizeof(*list_piece));
   new_l->square = S;
   new_l->next = L;
   return new_l;
@@ -63,30 +63,37 @@ void left_piece(list_piece P)
   }
 }
 
-void creat_list_piece(list_piece P)
+list_piece creat_list_piece()
 {
+  list_piece P = empty_list;
+  list_square S = empty_square();
   FILE * fichier;
   int pos_x = 0;
   int pos_y = 0;
   int caractereActuel;
 
   fichier = fopen("pentomino.txt", "r+w");
+  caractereActuel = fgetc(fichier);
 
   if(fichier != NULL){
     while(caractereActuel != EOF){
-      caractereActuel = fgetc(fichier);
-	if (caractereActuel == '#'){
-	  P->square = new_square(P->square, pos_x, pos_y);
+      	if (caractereActuel == '#'){
+	  S = new_square(S, pos_x, pos_y);
+	  P = add_piece(P,S);
 	  pos_x += 1;
-	}
-	if (caractereActuel == '\n'){
-	  pos_y += 1;
-	  pos_x = 0;
-	}
-	if (caractereActuel = '\n\n'){
-	  P = P->next;
-	  pos_x = 0;
-	  pos_y = 0;
+	  caractereActuel = fgets(fichier);
+	}else{
+	  if (caractereActuel == '\n'){
+	    pos_y += 1;
+	    pos_x = 0;
+	    caractereActuel = fgetc(fichier);
+	    if (caractereActuel = '\n\n'){
+	      P = P->next;
+	      pos_x = 0;
+	      pos_y = 0;
+	      caractereActuel = fgetsc(fichier);
+	    }
+	  }
 	}
       }
       fclose(fichier);
