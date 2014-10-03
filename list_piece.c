@@ -5,7 +5,7 @@ list_piece empty_list (void)
   return NULL;
 }
 
-list_piece add_piece(list_piece L, square S)
+list_piece add_piece(list_piece L, list_square S)
 {
   list_piece new_l = empty_list();
   new_l = (list_piece)malloc(sizeof(struct list_piece_ptr));
