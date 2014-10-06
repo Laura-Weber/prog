@@ -5,7 +5,8 @@ int main(int argc, char *argv[])
     SDL_Surface * ecran = NULL, *rectangle = NULL;
     int continuer = 1;
     SDL_Event event;
-
+    list_piece P;
+    
     SDL_Init(SDL_INIT_VIDEO); 
  
     ecran = SDL_SetVideoMode(640, 480, 32, SDL_HWSURFACE);
@@ -14,7 +15,10 @@ int main(int argc, char *argv[])
     SDL_Flip(ecran);
 
     SDL_WM_SetCaption("pentomino", NULL);
-           
+    
+    P = creat_list_piece();
+    afficher_list(P);
+    
     while (continuer)
     {
         SDL_WaitEvent(&event);
