@@ -83,18 +83,17 @@ list_piece creat_list_piece()
 	  S = new_square(S, pos_x, pos_y);
 	  pos_x += 1;
 	  nouv = 0;
-	}else{
-	  if (caractereActuel == '\n' && nouv == 0){
-	    pos_y += 1;
+	}
+	if (caractereActuel == '\n' && nouv == 0){
+	  pos_y += 1;
+	  pos_x = 0;
+	  nouv = 1;
+	}
+	if (caractereActuel = '\n' && nouv == 1){
+	    add_piece_after(P,S);	
 	    pos_x = 0;
-	    nouv = 1;
-	  }
-	  if (caractereActuel = '\n' && nouv == 1){
-	      add_piece_after(P,S);	
-	      pos_x = 0;
-	      pos_y = 0;
-	      nouv = 0;
-	  }
+	    pos_y = 0;
+	    nouv = 0;
 	}
       }
       fclose(fichier);
