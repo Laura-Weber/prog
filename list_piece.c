@@ -276,5 +276,6 @@ void afficher_list(list_piece P)
     printf("(%d, %d)", it->square->x, it->square->y);
     it->square = it->square->next;
     }
+  printf("\n");
   }
 }
