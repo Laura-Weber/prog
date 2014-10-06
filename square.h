@@ -2,6 +2,7 @@
 #define SQUARE_H
 
 #include "defs.h"
+#include "list_piece.h"
 
 typedef struct square_ptr{
   int x;
