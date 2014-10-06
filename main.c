@@ -6,6 +6,7 @@ int main(int argc, char *argv[])
     int continuer = 1;
     SDL_Event event;
     list_piece P;
+    list_square S;
     
     SDL_Init(SDL_INIT_VIDEO); 
  
@@ -18,8 +19,10 @@ int main(int argc, char *argv[])
     
     //P = creat_list_piece();
     P = empty_list();
-    P->square->x = 1;
-    P->square->y = 0;
+    S = empty_square();
+    S->x = 1;
+    S->y = 0;
+    P = add_piece_after(P, S);
     afficher_list(P);
     
     while (continuer)
