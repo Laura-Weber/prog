@@ -131,6 +131,15 @@ void supp_end_piece (list_piece racine)
 //    access functions    //
 ////////////////////////////
 
+bool is_empty(list_piece racine)
+{
+  if(racine->next == racine && racine->prec == racine){
+  	return true;
+  }else{
+  	return false;
+  }  
+}
+
 list_piece head_piece(list_piece racine)
 {
   if(racine->next != racine){
@@ -257,4 +266,15 @@ int nb_piece(list_piece P)
     nb += 1;
   }
   return nb;
+}
+
+void afficher_list(list_piece P)
+{
+  list_piece it;
+  for ( it = P->suiv; it != P; it = it->suiv ){
+    while(it->square != NULL){
+    printf("(%d, %d)", it->square->x, it->square->y);
+    it->square = it->square->next;
+    }
+  }
 }
