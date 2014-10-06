@@ -262,8 +262,9 @@ list_piece rotate_l(list_piece P)
 int nb_piece(list_piece P)
 {
   int nb = 0;
-  while(P->square != NULL){
-    nb += 1;
+  list_piece it;
+  for(it = P->next; it != P; it = it->next){
+      nb += 1;
   }
   return nb;
 }
@@ -278,4 +279,5 @@ void afficher_list(list_piece P)
     }
   printf("\n");
   }
+  free(it);
 }
