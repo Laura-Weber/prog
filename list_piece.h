@@ -56,6 +56,7 @@ void supp_end_piece (list_piece racine);
 //    access functions    //
 ////////////////////////////
 
+bool is_empty(list_piece racine);
 list_piece head_piece(list_piece racine);
 list_piece end_piece(list_piece racine);
 
@@ -82,6 +83,7 @@ list_piece rotate_l(list_piece P);
 //////////////////////////
 
 int nb_piece(list_piece P);
+void afficher_list(list_piece P);
 
 #endif /* LIST_PIECE_H */
  
