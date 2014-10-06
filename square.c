@@ -13,7 +13,7 @@ list_square new_square(list_square S, int x, int y)
   new_s = (list_square)malloc(sizeof(struct square_ptr));
   new_s->x = x;
   new_s->y = y;
-  new_s->next = S
+  new_s->next = S;
   return new_s;
 }
 
