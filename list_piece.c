@@ -72,13 +72,13 @@ list_piece creat_list_piece()
   int caractereActuel;
 
   fichier = fopen("pentomino.txt", "r+w");
+  rewind(fichier);
   caractereActuel = fgetc(fichier);
 
   if(fichier != NULL){
     while(caractereActuel != EOF){
       	if (caractereActuel == '#'){
 	  S = new_square(S, pos_x, pos_y);
-	  add_piece_after(P,S);
 	  pos_x += 1;
 	  caractereActuel = fgetc(fichier);
 	}else{
@@ -87,7 +87,7 @@ list_piece creat_list_piece()
 	    pos_x = 0;
 	    caractereActuel = fgetc(fichier);
 	    if (caractereActuel = '\n'){
-	      P = P->next;
+	      add_piece_after(P,S);	
 	      pos_x = 0;
 	      pos_y = 0;
 	      caractereActuel = fgetc(fichier);
