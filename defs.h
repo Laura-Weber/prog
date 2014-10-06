@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool>
+#include <stdbool.h>
 #include <SDL/SDL.h>
 #include "list_piece.h"
 #include "square.h"
