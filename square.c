@@ -3,7 +3,8 @@
 
 list_square empty_square()
 {
-  return NULL;
+  list_square S = NULL;
+  return S;
 }
 
 list_square new_square(list_square S, int x, int y)
