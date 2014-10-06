@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     S = empty_square();
     S->x = 1;
     S->y = 0;
-    P = add_piece_after(P, S);
+    add_piece_after(P, S);
     afficher_list(P);
     
     while (continuer)
