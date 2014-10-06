@@ -19,9 +19,7 @@ int main(int argc, char *argv[])
     
     //P = creat_list_piece();
     P = empty_list();
-    S = empty_square();
-    S->x = 1;
-    S->y = 0;
+    S = new_square(S, 0, 1);
     add_piece_after(P, S);
     afficher_list(P);
     
