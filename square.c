@@ -1,4 +1,4 @@
-#include "square.h"
+#include "defs.h"
 
 list_square empty_square()
 {
