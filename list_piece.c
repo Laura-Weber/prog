@@ -271,7 +271,7 @@ int nb_piece(list_piece P)
 void afficher_list(list_piece P)
 {
   list_piece it;
-  for ( it = P->suiv; it != P; it = it->suiv ){
+  for ( it = P->next; it != P; it = it->next){
     while(it->square != NULL){
     printf("(%d, %d)", it->square->x, it->square->y);
     it->square = it->square->next;
