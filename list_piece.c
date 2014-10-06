@@ -7,7 +7,8 @@
 /* Useful library inclusion           */
 /**************************************/
 
-#include "defs.h"
+#include "list_piece.h"
+#include "square.h""
 
 /*******************************************************************/
 /*             FUNCTION DEFINITION                                 */
