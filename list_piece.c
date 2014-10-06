@@ -9,6 +9,7 @@
 
 #include "list_piece.h"
 #include "square.h""
+#include "defs.h"
 
 /*******************************************************************/
 /*             FUNCTION DEFINITION                                 */
