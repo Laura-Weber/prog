@@ -70,28 +70,30 @@ list_piece creat_list_piece()
   int pos_x = 0;
   int pos_y = 0;
   int caractereActuel;
+  int nouv = 0;
 
   fichier = fopen("pentomino.txt", "r+w");
   rewind(fichier);
-  caractereActuel = fgetc(fichier);
+  
 
   if(fichier != NULL){
     while(caractereActuel != EOF){
+    	caractereActuel = fgetc(fichier);
       	if (caractereActuel == '#'){
 	  S = new_square(S, pos_x, pos_y);
 	  pos_x += 1;
-	  caractereActuel = fgetc(fichier);
+	  nouv = 0;
 	}else{
-	  if (caractereActuel == '\n'){
+	  if (caractereActuel == '\n' && nouv == 0){
 	    pos_y += 1;
 	    pos_x = 0;
-	    caractereActuel = fgetc(fichier);
-	    if (caractereActuel = '\n'){
+	    nouv = 1;
+	  }
+	  if (caractereActuel = '\n' && nouv == 1){
 	      add_piece_after(P,S);	
 	      pos_x = 0;
 	      pos_y = 0;
-	      caractereActuel = fgetc(fichier);
-	    }
+	      nouv = 0;
 	  }
 	}
       }
