@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 
     SDL_WM_SetCaption("pentomino", NULL);
     
-    //P = creat_list_piece();
-    afficher_list(P);
+    P = creat_list_piece();
+    //afficher_list(P);
     
     while (continuer)
     {
