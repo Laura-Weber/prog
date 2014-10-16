@@ -65,12 +65,13 @@ void add_end_piece(list_piece racine, list_square S)
 list_piece creat_list_piece()
 {
   list_piece P = empty_list();
-  list_square S = empty_square();
   FILE * fichier;
   int pos_x = 0;
   int pos_y = 0;
   int caractereActuel;
   int nouv = 0;
+  
+  P->square = empty_square();
 
   fichier = fopen("pentomino.txt", "r+w");
   rewind(fichier);
@@ -80,7 +81,7 @@ list_piece creat_list_piece()
     while(caractereActuel != EOF){
     	caractereActuel = fgetc(fichier);
       	if (caractereActuel == '#'){
-	  S = new_square(S, pos_x, pos_y);
+	  P->square = new_square(P->square, pos_x, pos_y);
 	  pos_x += 1;
 	  nouv = 0;
 	}
@@ -89,8 +90,8 @@ list_piece creat_list_piece()
 	  pos_x = 0;
 	  nouv = 1;
 	}
-	if (caractereActuel = '\n' && nouv == 1){
-	    add_piece_after(P,S);	
+	if (caractereActuel == '\n' && nouv == 1){
+	    add_piece_after(P,P->square);	
 	    pos_x = 0;
 	    pos_y = 0;
 	    nouv = 0;
