@@ -5,8 +5,7 @@ int main(int argc, char *argv[])
     SDL_Surface * ecran = NULL, *rectangle = NULL;
     int continuer = 1;
     SDL_Event event;
-    list_piece P;
-    list_square S;
+    list_piece P = empty_list();
     
     SDL_Init(SDL_INIT_VIDEO); 
  
