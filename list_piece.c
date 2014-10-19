@@ -1,285 +1,237 @@
-/******************************************************************/
-/* list_piece.c                                                   */
-/* Léa SCHMITT, Laura Weber                                       */
-/******************************************************************/
+/****************************/
+/* WEBER Laura, SCHMITT Lea */
+/* L2 info                  */
+/* list_piece.c             */
+/****************************/
 
 /**************************************/
 /* Useful library inclusion           */
 /**************************************/
 
-#include "list_piece.h"
-#include "square.h""
 #include "defs.h"
 
 /*******************************************************************/
 /*             FUNCTION DEFINITION                                 */
 /*******************************************************************/
 
-list_piece empty_list (void)
+Dlist_piece new_list_piece()
 {
-  list_piece racine = malloc(sizeof(* racine));
-  racine->prec = racine;
-  racine->next = racine;
-  return racine;
-}
-/////////////////////
-//   add fuction   //
-/////////////////////
-
-void add_piece_before(list_piece L, list_square S)
-{
-  list_piece new_l ;
-  new_l = malloc(sizeof(*new_l));
-  new_l->square = S;
-  new_l->prec = L->prec;
-  new_l->next = L;
-  L->prec->next = new_l;
-  L->prec = new_l;
+    Dlist_piece new_l = malloc(sizeof *new_l);
+    if (new_l != NULL){
+        new_l->lenght = 0;
+        new_l->head = NULL;
+        new_l->tail = NULL;
+    }
+    return new_l;
 }
 
-void add_piece_after(list_piece L, list_square S)
+      ////////////////////////
+      //    constructeur    //
+      ////////////////////////
+
+Dlist_piece add_piece(Dlist_piece LP, Dlist_square square)
 {
-  list_piece new_l;
-  new_l = malloc(sizeof(*new_l));
-  new_l->square = S;
-  new_l->prec = L;
-  new_l->next = L->next;
-  L->next->prec = new_l;
-  L->next = new_l;
+    if(LP != NULL){
+        struct list_piece_ptr *new_l = malloc(sizeof *new_l);
+        if (new_l != NULL){
+            new_l->S = square;
+            new_l->next = NULL;
+            if(LP->tail == NULL){
+                new_l->prev = NULL;
+                LP->head = new_l;
+                LP->tail = new_l;
+            }else{
+                LP->tail->next = new_l;
+                new_l->prev = LP->tail;
+                LP->tail = new_l;
+            }
+            LP->lenght++;
+        }
+    }
+    return LP;
 }
 
-void add_head_piece(list_piece racine, list_square S)
+Dlist_piece creat_list_piece()
 {
-  add_piece_after(racine, S);
-}
+    Dlist_piece LP = NULL;
+    LP = malloc(sizeof *LP);
+    FILE * fichier;
+    int caractereActuel;
+    int nouv = 0;
+    char * tab[100][6];
+    SDL_Rect pos;
+    pos.x = 0;
+    pos.y = 0;
+    pos.h = BLOC_SIZE;
+    pos.w = BLOC_SIZE;
+    tab[100][0] = "c_bleuc.bmp";
+    tab[100][1] = "c_jauc.bmp";
+    tab[100][2] = "c_rosec.bmp";
+    tab[100][3] = "c_rosef.bmp";
+    tab[100][4] = "c_vertc.bmp";
+    tab[100][5] = "c_viof.bmp";
+    int i = 0;
 
-void add_end_piece(list_piece racine, list_square S)
-{
-  add_piece_before(racine, S);
-}
+    fichier = fopen("pentomino.txt", "r+w");
+    rewind(fichier);
 
-/////////////////////////
-//     constructors    //
-/////////////////////////
-
-list_piece creat_list_piece()
-{
-  list_piece P = empty_list();
-  FILE * fichier;
-  int pos_x = 0;
-  int pos_y = 0;
-  int caractereActuel;
-  int nouv = 0;
-  
-  P->square = empty_square();
-
-  fichier = fopen("pentomino.txt", "r+w");
-  rewind(fichier);
-  
-
-  if(fichier != NULL){
-    while(caractereActuel != EOF){
-    	caractereActuel = fgetc(fichier);
-      	if (caractereActuel == '#'){
-	  P->square = new_square(P->square, pos_x, pos_y);
-	  pos_x += 1;
-	  nouv = 0;
-	}
-	if (caractereActuel == '\n' && nouv == 0){
-	  pos_y += 1;
-	  pos_x = 0;
-	  nouv = 1;
-	}
-	if (caractereActuel == '\n' && nouv == 1){
-	    add_piece_after(P,P->square);	
-	    pos_x = 0;
-	    pos_y = 0;
-	    nouv = 0;
-	}
-      }
-      fclose(fichier);
+    if(fichier != NULL){
+        while(caractereActuel != EOF){
+            caractereActuel = fgetc(fichier);
+            if (caractereActuel == '#'){
+                LP->head->S = add_square(LP->head->S,tab[100][i], pos);
+                pos.x += 1;
+                nouv = 0;
+            }
+            if (caractereActuel == '\n' && nouv == 0){
+                pos.y += 1;
+                pos.x = 0;
+                nouv = 1;
+            }
+            if (caractereActuel == '\n' && nouv == 1){
+                LP = add_piece(LP,LP->head->S);
+                pos.x = 0;
+                pos.y = 0;
+                nouv = 0;
+                if(i == 6){
+                    i = 0;
+                }else{
+                    i++;
+                }
+            }
+        }
+    fclose(fichier);
     }else{
-      printf("erreur fichier vide\n");
+        printf("erreur fichier vide\n");
 	}
-  return P;
+    return LP;
 }
 
-/////////////////////////////
-//     Supp function       //
-/////////////////////////////
+      ///////////////////
+      //    lecture    //
+      ///////////////////
 
-void supp_piece(list_piece P)
+size_t nb_piece(Dlist_piece LP)
 {
-  P->prec->next = P->next;
-  P->next->prec = P->prec;
-  free(P);
-}
-
-void supp_head_piece (list_piece racine)
-{
-  if(racine->next != racine){
-    supp_piece(racine->next);;
-  }
-}
-
-void supp_end_piece (list_piece racine)
-{
-  if(racine->prec != racine){
-    supp_piece(racine->prec);;
-  }
-}
-
-////////////////////////////
-//    access functions    //
-////////////////////////////
-
-bool is_empty(list_piece racine)
-{
-  if(racine->next == racine && racine->prec == racine){
-  	return true;
-  }else{
-  	return false;
-  }  
-}
-
-list_piece head_piece(list_piece racine)
-{
-  if(racine->next != racine){
-    return racine->next;
-  }else{
-    return NULL;
-  }
-}
-
-list_piece end_piece(list_piece racine)
-{
-  if(racine->prec != racine){
-    return racine->prec;
-  }else{
-    return NULL;
-  }
-}
-
-////////////////////////////
-//      free function     //
-////////////////////////////
-
-void free_list_piece(list_piece P)
-{
-  list_piece tmp, cur;
-  for(tmp = P->next; tmp != P; tmp = cur){
-    cur = tmp->next;
-    free(tmp);
-  }
-  free(P);
-  P = NULL;
-}
-
-//////////////////////////
-//    move function     //
-//////////////////////////
-
-void up_piece(list_piece P)
-{
-  while (P->square != NULL){
-    P->square->y -= 1;
-    P->square = P->square->next;
-  }
-}
-
-void down_piece(list_piece P)
-{
-  while (P->square != NULL){
-    P->square->y += 1;
-    P->square = P->square->next;
-  }
-}
-
-void right_piece(list_piece P)
-{
-  while (P->square != NULL){
-    P->square->x += 1;
-    P->square = P->square->next;
-  }
-}
-
-void left_piece(list_piece P)
-{
-  while (P->square != NULL){
-    P->square->x -= 1;
-    P->square = P->square->next;
-  }
-}
-
-list_piece rotate_r(list_piece P)
-{
-  while(P->square != NULL){
-    if(P->square->x == 0){
-  	P->square->x = P->square->y;
-  	P->square->y = 3;
+    size_t nb = 0;
+    if(LP != NULL){
+        nb = LP->lenght;
     }
-    if(P->square->x == 1){
-  	P->square->x = P->square->y;
-  	P->square->y = 2;
+    return nb;
+}
+
+      /////////////////////////
+      //    free function    //
+      /////////////////////////
+
+void free_list_piece(Dlist_piece * LP)
+{
+    if(*LP != NULL){
+        struct list_piece_ptr * temp = (*LP)->head;
+        while(temp != NULL){
+            struct list_piece_ptr * del = temp;
+            temp = temp->next;
+            free(del);
+        }
+        free(*LP), *LP = NULL;
     }
-    if(P->square->x == 2){
-    	P->square->x = P->square->y;
-    	P->square->y = 1;
-    }
-    if(P->square->x == 3){
-    	P->square->x = P->square->y;
-    	P->square->y = 0;
-    }
-  P->square = P->square->next;
+}
+
+      //////////////////////////
+      //    move function     //
+      //////////////////////////
+
+void up_piece(struct list_piece_ptr *P)
+{
+  while (P->S != NULL){
+    P->S->head->pos.y -= 1;
+    P->S->head = P->S->head->next;
   }
 }
 
-list_piece rotate_l(list_piece P)
+void down_piece(struct list_piece_ptr *P)
 {
-  while(P->square != NULL){
-    if(P->square->y == 0){
-      P->square->y = P->square->x;
-      P->square->x = 3;
-    }
-    if(P->square->y == 1){
-      P->square->y = P->square->x;
-      P->square->x = 2;
-    }
-    if(P->square->y == 2){
-      P->square->y = P->square->x;
-      P->square->x = 1;
-    }
-    if(P->square->y == 3){
-      P->square->y = P->square->x;
-      P->square->x = 0;
-    }
-    P->square = P->square->next;
+  while (P->S->head != NULL){
+    P->S->head->pos.y += 1;
+    P->S->head = P->S->head->next;
   }
 }
 
-//////////////////////////
-//    other function    //
-//////////////////////////
-
-int nb_piece(list_piece P)
+void right_piece(struct list_piece_ptr *P)
 {
-  int nb = 0;
-  list_piece it;
-  for(it = P->next; it != P; it = it->next){
-      nb += 1;
+  while (P->S->head != NULL){
+    P->S->head->pos.x += 1;
+    P->S->head = P->S->head->next;
   }
-  return nb;
 }
 
-void afficher_list(list_piece P)
+void left_piece(struct list_piece_ptr *P)
 {
-  list_piece it;
-  for ( it = P->next; it != P; it = it->next){
-    while(it->square != NULL){
-    printf("(%d, %d)", it->square->x, it->square->y);
-    it->square = it->square->next;
-    }
-  printf("\n");
+  while (P->S->head != NULL){
+    P->S->head->pos.x -= 1;
+    P->S->head = P->S->head->next;
   }
-  free(it);
+}
+
+void rotate_r(struct list_piece_ptr *P)
+{
+  while(P->S->head != NULL){
+    if(P->S->head->pos.x == 0){
+  	P->S->head->pos.x = P->S->head->pos.y;
+  	P->S->head->pos.y = 3;
+    }
+    if(P->S->head->pos.x == 1){
+  	P->S->head->pos.x = P->S->head->pos.y;
+  	P->S->head->pos.y = 2;
+    }
+    if(P->S->head->pos.x == 2){
+    	P->S->head->pos.x = P->S->head->pos.y;
+    	P->S->head->pos.y = 1;
+    }
+    if(P->S->head->pos.x == 3){
+    	P->S->head->pos.x = P->S->head->pos.y;
+    	P->S->head->pos.y = 0;
+    }
+  P->S->head = P->S->head->next;
+  }
+}
+
+void rotate_l(struct list_piece_ptr *P)
+{
+  while(P->S->head != NULL){
+    if(P->S->head->pos.y == 0){
+      P->S->head->pos.y = P->S->head->pos.x;
+      P->S->head->pos.x = 3;
+    }
+    if(P->S->head->pos.y == 1){
+      P->S->head->pos.y = P->S->head->pos.x;
+      P->S->head->pos.x = 2;
+    }
+    if(P->S->head->pos.y == 2){
+      P->S->head->pos.y = P->S->head->pos.x;
+      P->S->head->pos.x = 1;
+    }
+    if(P->S->head->pos.y == 3){
+      P->S->head->pos.y = P->S->head->pos.x;
+      P->S->head->pos.x = 0;
+    }
+    P->S->head = P->S->head->next;
+  }
+}
+
+      //////////////////////////
+      //    blitt function    //
+      //////////////////////////
+
+void blitt_piece(Dlist_piece LP, SDL_Surface *screen)
+{
+    if(LP != NULL){
+        while(LP->head != NULL){
+            while(LP->head->S != NULL){
+                SDL_BlitSurface(LP->head->S->head->square,NULL,screen,&LP->head->S->head->pos);
+                LP->head->S->head = LP->head->S->head->next;
+            }
+            LP->head = LP->head->next;
+        }
+    }
 }
