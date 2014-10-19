@@ -1,89 +1,76 @@
 #ifndef LIST_PIECE_H
 #define LIST_PIECE_H
 
-/******************************************************************/
-/* list_piece.h                                                   */
-/* Léa SCHMITT, Laura Weber                                       */
-/******************************************************************/
+/****************************/
+/* WEBER Laura, SCHMITT Lea */
+/* L2 info                  */
+/* list_square.h            */
+/****************************/
 
 /**************************************/
 /* Useful library inclusion           */
 /**************************************/
 
 #include "defs.h"
-#include "square.h"
 
 /*******************/
 /*    Structure    */
 /*******************/
 
-typedef struct piece_ptr{
-  struct square_ptr * square;
-  struct piece_ptr * prec;
-  struct piece_ptr * next;
-} *list_piece;
+struct list_piece_ptr
+{
+    struct list_piece_ptr * next;
+    struct list_piece_ptr * prev;
+    struct dlist_square_ptr * S;
+};
 
-/*******************************************************************/
-/*             FUNCTION DEFINITION                                 */
-/*******************************************************************/
+typedef struct dlist_piece_ptr
+{
+    size_t lenght;
+    struct list_piece_ptr *tail;
+    struct list_piece_ptr *head;
+}*Dlist_piece;
 
-list_piece empty_list (void);
+/***************************/
+/*  Function prototypes    */
+/***************************/
 
-/////////////////////
-//   add fuction   //
-/////////////////////
+Dlist_piece new_list_piece();
 
-void add_piece_before(list_piece L, list_square S);
-void add_piece_after(list_piece L, list_square S);
-void add_head_piece(list_piece racine, list_square S);
-void add_end_piece(list_piece racine, list_square S);
+      ////////////////////////
+      //    constructeur    //
+      ////////////////////////
 
-/////////////////////////
-//     constructors    //
-/////////////////////////
+Dlist_piece add_piece(Dlist_piece LP, Dlist_square square);
+Dlist_piece creat_list_piece();
 
-list_piece creat_list_piece();  
+      ////////////////////////////
+      //    reading function    //
+      ////////////////////////////
 
-/////////////////////////////
-//     Supp function       //
-/////////////////////////////
+size_t nb_piece(Dlist_piece LP);
 
-void supp_piece(list_piece P);
-void supp_head_piece (list_piece racine);
-void supp_end_piece (list_piece racine);
+      /////////////////////////
+      //    free function    //
+      /////////////////////////
 
-////////////////////////////
-//    access functions    //
-////////////////////////////
+void free_list_piece(Dlist_piece * LP);
 
-bool is_empty(list_piece racine);
-list_piece head_piece(list_piece racine);
-list_piece end_piece(list_piece racine);
+      //////////////////////////
+      //    move function     //
+      //////////////////////////
 
-////////////////////////////
-//      free function     //
-////////////////////////////
+void up_piece(struct list_piece_ptr *P);
+void down_piece(struct list_piece_ptr *P);
+void right_piece(struct list_piece_ptr *P);
+void left_piece(struct list_piece_ptr *P);
+void rotate_r(struct list_piece_ptr *P);
+void rotate_l(struct list_piece_ptr *P);
 
-void free_list_piece(list_piece P);
+      //////////////////////////
+      //    blitt function    //
+      //////////////////////////
 
-//////////////////////////
-//    move function     //
-//////////////////////////
+void blitt_piece(Dlist_piece LP, SDL_Surface *screen);
 
-void up_piece(list_piece P);
-void down_piece(list_piece P);
-void up_piece(list_piece P);
-void right_piece(list_piece P);
-void left_piece(list_piece P);
-list_piece rotate_r(list_piece P);
-list_piece rotate_l(list_piece P);
-
-//////////////////////////
-//    other function    //
-//////////////////////////
-
-int nb_piece(list_piece P);
-void afficher_list(list_piece P);
-
-#endif /* LIST_PIECE_H */
- 
+#endif // LIST_PIECE_H
