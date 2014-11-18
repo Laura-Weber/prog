@@ -13,6 +13,7 @@
 SDL_Surface * screen;
 SDL_Rect pos_screen;
 piece* piece_select;
+piece * board;
 list_piece * a_jouer;
 int continuer;
 
@@ -58,29 +59,27 @@ void sym()
 
 void select_piece(int x,int y)
 {
-square * square_actu;
-  piece * piece_actu = a_jouer->first_piece;
-  int trouver = 0;
-  while(piece_actu && trouver == 0){
-     square_actu = piece_actu->rotate_tab[piece_actu->rotation_actual]->first_square;
+    square * square_actu;
+    piece * piece_actu = a_jouer->first_piece;
+    int trouver = 0;
+    while(piece_actu && trouver == 0){
+        square_actu = piece_actu->rotate_tab[piece_actu->rotation_actual]->first_square;
 
-    while(square_actu && trouver == 0){
-      if( ( x >= piece_actu->x + (square_actu->x -1) *BLOC_SIZE ) && ( (x <= piece_actu->x + square_actu->x *BLOC_SIZE ) ))
-      {
-            if( ( y >= piece_actu->y + (square_actu->y-1) *BLOC_SIZE ) && ( (y <= piece_actu->y + square_actu->y *BLOC_SIZE ) ))
-            {
+        while(square_actu && trouver == 0){
+            if( ( x >= piece_actu->x + (square_actu->x ) *BLOC_SIZE ) && ( (x <= piece_actu->x + (square_actu->x+1) *BLOC_SIZE ) )){
+                if( ( y >= piece_actu->y + (square_actu->y) *BLOC_SIZE ) && ( (y <= piece_actu->y + (square_actu->y+1) *BLOC_SIZE ) )){
 
-              trouver = 1;
-              piece_select = piece_actu;
-              piece_select->sur_plateau = 0;
+                    trouver = 1;
+                    piece_select = piece_actu;
+                    piece_select->sur_plateau = 0;
 
+                }
             }
-        }
             square_actu = square_actu->next;
-    }
-    piece_actu = piece_actu->next;
+        }
+        piece_actu = piece_actu->next;
 
-  }
+    }
 }
 
 int win()
@@ -96,20 +95,24 @@ int win()
   return 1;
 }
 
-int x_sur_plateau(int x)
+int x_on_board(int x)
 {
-
+    return ((int)(x/BLOC_SIZE)) * BLOC_SIZE;
 }
 
-int y_sur_plateau(int y )
+int y_on_board(int y )
 {
-
+    return ((int)(y/BLOC_SIZE)) * BLOC_SIZE;
 }
 
-void pose()
+void place_on_board()
 {
-  square * square_actu = piece_select->rotate_tab[piece_select->rotation_actual]->first_square;
-
+    piece * piece_actu = piece_select;
+    if(piece_actu){
+        piece_actu->x = x_on_board(piece_actu->x);
+        piece_actu->y = y_on_board(piece_actu->y);
+    }
+    piece_select = NULL;
 }
 
 void play()
@@ -119,11 +122,11 @@ void play()
   int play = 1;
   SDL_Surface *game = NULL;
   SDL_Event event;
-  char * road = "1.txt";
-  piece * board = creat_piece();
+  char * road = "2.txt";
+  board = creat_piece();
   a_jouer = creat_lvl(road, board);
   game = SDL_LoadBMP("fd2.bmp");
-  blitt_piece(a_jouer, board, screen);
+  blitt_piece(a_jouer, piece_select, board, screen);
   SDL_BlitSurface(game, NULL, screen, &pos_screen);
 
 
@@ -133,12 +136,14 @@ void play()
         case SDL_QUIT:
                 play = 0;
                 break;
+
             case SDL_KEYDOWN:
             switch (event.key.keysym.sym){
                 case SDLK_q: // need to press q
                 case SDLK_ESCAPE:
                 play = 0;
                 break;
+
             }
             break;
 
@@ -154,28 +159,29 @@ void play()
 
                 }
                 break;
+
             case SDL_MOUSEBUTTONUP:
                 if ((event.button.button == SDL_BUTTON_RIGHT) && piece_select){
                         sym();
                     }
                 if(event.button.button == SDL_BUTTON_LEFT){
                     if (piece_select){
-                        piece_select = NULL;
+                        place_on_board();
                     }else {
                         select_piece(event.button.x, event.button.y);
                     }
-                    case SDL_MOUSEMOTION:
-                        if (piece_select){
-                            move_piece(piece_select, event.button.x - BLOC_SIZE * 2, event.button.y);
-                        }
-                        break;
-                    }
-
+                }
                 break;
+
+                case SDL_MOUSEMOTION:
+                    if (piece_select){
+                        move_piece(piece_select, event.button.x - BLOC_SIZE * 2, event.button.y);
+                    }
+                    break;
     }
 
     SDL_BlitSurface(game, NULL, screen, &pos_screen);
-    blitt_piece(a_jouer, board, screen);
+    blitt_piece(a_jouer, piece_select, board, screen);
     SDL_Flip(screen);
   }
 
@@ -233,5 +239,7 @@ int main(int argc, char *argv[])
   SDL_Quit();
   exit(EXIT_SUCCESS);
 }
+
+
 
 
