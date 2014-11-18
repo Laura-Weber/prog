@@ -1,3 +1,4 @@
+
 #include "defs.h"
 
 list_piece * creat_lvl(char * road, piece * board)
@@ -11,7 +12,7 @@ list_piece * creat_lvl(char * road, piece * board)
   int caract;
   int x;
   int y;
-  x =0;
+  x = 0;
   y = 0;
   int j = 50, k = 0;
   unsigned int nb_diese = 0;
@@ -112,14 +113,12 @@ list_piece * creat_lvl(char * road, piece * board)
   return LP;
 }
 
-void blitt_piece(list_piece *LP, piece *board, SDL_Surface * screen)
+void blitt_piece(list_piece *LP, piece * piece_select, piece *board, SDL_Surface * screen)
 {
   SDL_Rect pos;
   pos.h = BLOC_SIZE;
   pos.w = BLOC_SIZE;
-
-  square *S = board->rotate_tab[LP->first_piece->rotation_actual]->first_square;
-
+  square *S = board->rotate_tab[board->rotation_actual]->first_square;
   while(S){
 
     pos.x = board->x + (S->x)*BLOC_SIZE;
@@ -132,18 +131,31 @@ void blitt_piece(list_piece *LP, piece *board, SDL_Surface * screen)
 
   piece * temp = LP->first_piece;
 
-  while(temp){
+    while(temp){
+        if(piece_select != temp){
+            S = temp->rotate_tab[temp->rotation_actual]->first_square;
+            while(S){
 
-    S = temp->rotate_tab[LP->first_piece->rotation_actual]->first_square;
-    while(S){
-      pos.x = temp->x + (S->x)*BLOC_SIZE;
-      pos.y = temp->y + (S->y)*BLOC_SIZE;
-      pos.x += BLOC_SIZE;
-      SDL_BlitSurface(temp->bitmap,NULL,screen,&pos);
-      S = S->next;
-
-    }
+                pos.x = temp->x + (S->x)*BLOC_SIZE;
+                pos.y = temp->y + (S->y)*BLOC_SIZE;
+                pos.x += BLOC_SIZE;
+                SDL_BlitSurface(temp->bitmap,NULL,screen,&pos);
+                S = S->next;
+            }
+        }
     temp = temp->next;
+  }
+
+  if(piece_select){
+      S = piece_select->rotate_tab[piece_select->rotation_actual]->first_square;
+      while(S){
+
+          pos.x = piece_select->x + (S->x)*BLOC_SIZE;
+          pos.y = piece_select->y + (S->y)*BLOC_SIZE;
+          pos.x += BLOC_SIZE;
+          SDL_BlitSurface(piece_select->bitmap,NULL,screen,&pos);
+          S = S->next;
+      }
   }
 }
 
