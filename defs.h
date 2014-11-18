@@ -11,10 +11,13 @@
 #include "list_piece.h"
 #include "level.h"
 
-#define X_BOARD 200
-#define Y_BOARD 200
+
 #define BLOC_SIZE 32
+#define X_BOARD BLOC_SIZE * 6
+#define Y_BOARD BLOC_SIZE * 6
 #define SCREEN_WIDTH  900
 #define SCREEN_HEIGHT 600
 
 #endif // DEFS_H
+
+
